@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SignInViewController.h
 //  FirebaseGuideDemo
 //
 //  Created by 金秋成 on 16/9/28.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface SignInViewController : UIViewController
 
 @end
-
