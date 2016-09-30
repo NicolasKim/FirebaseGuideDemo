@@ -27,6 +27,7 @@
     if (self.emailTextField.text.length == 0) return;
     if (self.passTextField.text.length == 0) return;
     [self.view endEditing:YES];
+    __weak typeof(self) weakSelf = self;
     //hud创建并显示
     MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[FIRAuth auth]signInWithEmail:self.emailTextField.text
@@ -41,6 +42,9 @@
         else{
             hud.label.text = @"授权成功";
             [hud hideAnimated:YES afterDelay:2];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
+            });
         }
     }];
 }

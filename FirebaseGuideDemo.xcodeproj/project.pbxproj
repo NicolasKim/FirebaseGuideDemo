@@ -153,21 +153,10 @@
 		9992758D1D9C03E400843972 /* FirebaseGuideDemo */ = {
 			isa = PBXGroup;
 			children = (
-				99BE55931D9CFE9900B0C52F /* Content.html */,
 				999275911D9C03E500843972 /* AppDelegate.h */,
 				999275921D9C03E500843972 /* AppDelegate.m */,
 				9935E9DF1D9D0605001188F6 /* Auth */,
-				999275971D9C03E500843972 /* Main.storyboard */,
-				9935E9E01D9D0625001188F6 /* MainNavigationController.h */,
-				9935E9E11D9D0625001188F6 /* MainNavigationController.m */,
-				99FE8FE91D9D57F60074B60C /* TopicModel.h */,
-				99FE8FEA1D9D57F60074B60C /* TopicModel.m */,
-				9935E9E31D9D0644001188F6 /* TopicListViewController.h */,
-				9935E9E41D9D0644001188F6 /* TopicListViewController.m */,
-				9935E9E61D9D065B001188F6 /* PostTopicViewController.h */,
-				9935E9E71D9D065B001188F6 /* PostTopicViewController.m */,
-				9935E9E91D9D066E001188F6 /* TopicDetailViewController.h */,
-				9935E9EA1D9D066E001188F6 /* TopicDetailViewController.m */,
+				99FE8FEC1D9DFB550074B60C /* Main */,
 				9992759A1D9C03E500843972 /* Assets.xcassets */,
 				9992759C1D9C03E500843972 /* LaunchScreen.storyboard */,
 				9992759F1D9C03E500843972 /* Info.plist */,
@@ -201,6 +190,25 @@
 				999275B51D9C03E500843972 /* Info.plist */,
 			);
 			path = FirebaseGuideDemoUITests;
+			sourceTree = "<group>";
+		};
+		99FE8FEC1D9DFB550074B60C /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				99BE55931D9CFE9900B0C52F /* Content.html */,
+				999275971D9C03E500843972 /* Main.storyboard */,
+				9935E9E01D9D0625001188F6 /* MainNavigationController.h */,
+				9935E9E11D9D0625001188F6 /* MainNavigationController.m */,
+				99FE8FE91D9D57F60074B60C /* TopicModel.h */,
+				99FE8FEA1D9D57F60074B60C /* TopicModel.m */,
+				9935E9E31D9D0644001188F6 /* TopicListViewController.h */,
+				9935E9E41D9D0644001188F6 /* TopicListViewController.m */,
+				9935E9E61D9D065B001188F6 /* PostTopicViewController.h */,
+				9935E9E71D9D065B001188F6 /* PostTopicViewController.m */,
+				9935E9E91D9D066E001188F6 /* TopicDetailViewController.h */,
+				9935E9EA1D9D066E001188F6 /* TopicDetailViewController.m */,
+			);
+			name = Main;
 			sourceTree = "<group>";
 		};
 		B40A68E420C19309E95DC272 /* Frameworks */ = {

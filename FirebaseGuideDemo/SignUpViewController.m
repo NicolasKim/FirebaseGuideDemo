@@ -25,9 +25,9 @@
     if (self.emailTextField.text.length == 0) return;
     if (self.passTextField.text.length == 0) return;
     [self.view endEditing:YES];
+    __weak typeof(self) weakSelf = self;
     //hud创建并显示
     MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
     [[FIRAuth auth]createUserWithEmail:self.emailTextField.text password:self.passTextField.text completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         //切换提示框样式
         hud.mode = MBProgressHUDModeText;
@@ -38,6 +38,9 @@
         else{
             hud.label.text = @"注册成功";
             [hud hideAnimated:YES afterDelay:2];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
+            });
         }
     }];
 }
