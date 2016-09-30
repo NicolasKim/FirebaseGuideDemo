@@ -2,8 +2,12 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>%@</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>$$title</title>
     <style type="text/css">
+      *{
+        box-sizing:border-box;
+      }
       body{
         width : 100%;
         padding: 0px;
@@ -11,6 +15,7 @@
       }
       .center{
         text-align: center;
+        width : 100%
       }
       #title{
         font-size: 50px;
@@ -27,10 +32,10 @@
     </style>
   </head>
   <body>
-    <div class = "center" id="title">%@</div>
+    <div class = "center" id="title">$$title</div>
     <div class = "center">
-      <img src="%@" id="image"><img>
+      <img src="$$imageurl" id="image"><img>
     </div>
-      <p class = "center" id="content">%@</p>
+      <p class = "center" id="content">$$content</p>
   </body>
 </html>

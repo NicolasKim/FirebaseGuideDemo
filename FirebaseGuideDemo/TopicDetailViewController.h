@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface TopicDetailViewController : UIViewController
-
+@property (nonatomic,strong)NSString * htmlString;
 @end

@@ -7,7 +7,8 @@
 //
 
 #import "SignUpViewController.h"
-
+#import <FirebaseAuth/FirebaseAuth.h>
+#import <MBProgressHUD.h>
 @interface SignUpViewController ()
 
 @end
@@ -16,22 +17,34 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)SignUpBtnClick:(id)sender {
+    //空值判断
+    if (self.emailTextField.text.length == 0) return;
+    if (self.passTextField.text.length == 0) return;
+    [self.view endEditing:YES];
+    //hud创建并显示
+    MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    [[FIRAuth auth]createUserWithEmail:self.emailTextField.text password:self.passTextField.text completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+        //切换提示框样式
+        hud.mode = MBProgressHUDModeText;
+        if (error) {
+            hud.label.text = [error localizedDescription];
+            [hud hideAnimated:YES afterDelay:2];
+        }
+        else{
+            hud.label.text = @"注册成功";
+            [hud hideAnimated:YES afterDelay:2];
+        }
+    }];
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
 }
-*/
 
 @end

@@ -9,6 +9,7 @@
 #import "TopicDetailViewController.h"
 
 @interface TopicDetailViewController ()
+@property (weak, nonatomic) IBOutlet UIWebView *webview;
 
 @end
 
@@ -16,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self.webview loadHTMLString:self.htmlString baseURL:nil];
 }
 
 - (void)didReceiveMemoryWarning {

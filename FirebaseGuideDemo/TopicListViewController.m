@@ -7,92 +7,91 @@
 //
 
 #import "TopicListViewController.h"
-
+#import "TopicModel.h"
+#import <FirebaseDatabase/FirebaseDatabase.h>
+#import <FirebaseAuth/FirebaseAuth.h>
+#import "TopicDetailViewController.h"
 @interface TopicListViewController ()
-
+@property (nonatomic,strong)NSMutableArray * datasource;
+@property (nonatomic,strong)FIRDatabaseReference * topicRef;
 @end
 
 @implementation TopicListViewController
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //数据源创建
+    self.datasource = [NSMutableArray new];
+    __weak typeof(self) weakSelf = self;
+    //登录监听
+    [[FIRAuth auth]addAuthStateDidChangeListener:^(FIRAuth * _Nonnull auth, FIRUser * _Nullable user) {
+        if (user) {
+            //如果当前有登录用户,根据priority进行排序，并获取最新的20调数据
+            FIRDatabaseQuery * query =[[weakSelf.topicRef queryOrderedByPriority] queryLimitedToFirst:20];
+            //监听数据库值得变化，当数据库数据有变动，比如topic条数添加/删除时 会触发此block
+            FIRDatabaseHandle handle = [query observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+                NSDictionary * dict = snapshot.value;
+                [self.datasource removeAllObjects];
+                //便利查询的值
+                [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    TopicModel * model = [[TopicModel alloc]init];
+                    model.topicId      = key;//topic的唯一值
+                    model.topicDesc    = obj[@"topicDesc"];
+                    model.topicImageURL = obj[@"topicImageURL"];
+                    model.authName      = obj[@"auth"] ?: @"unknown" ;
+                    model.topicTitle    = obj[@"topicTitle"];
+                    model.topicHTMLString = obj[@"topicHtml"];
+                    NSTimeInterval interval = [obj[@"createdate"] doubleValue];
+                    if (interval > 0) {
+                        model.postDate      = [NSDate dateWithTimeIntervalSince1970:[obj[@"createdate"] doubleValue]];
+                    }
+                    [weakSelf.datasource addObject:model];
+                    //刷新列表
+                    [weakSelf.tableView reloadData];
+                }];
+            }];
+        }
+    }];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return self.datasource.count;
 }
-
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    TopicModel * model = self.datasource[indexPath.row];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.textLabel.text = model.topicTitle;
+    cell.detailTextLabel.text = model.topicDesc;
     return cell;
 }
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44.f;
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"detail"]) {
+        NSIndexPath * indexPath = [self.tableView indexPathForCell:sender];
+        TopicModel * model =  self.datasource[indexPath.row];
+        TopicDetailViewController * detailVC = segue.destinationViewController;
+        detailVC.htmlString = model.topicHTMLString;
+    }
 }
-*/
+-(FIRDatabaseReference *)topicRef{
+    if (!_topicRef) {
+        _topicRef = [[FIRDatabase database]referenceFromURL:@"https://firstfirebase-298c7.firebaseio.com/news"];
+    }
+    return _topicRef;
+}
+
 
 @end

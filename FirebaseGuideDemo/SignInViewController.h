@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SignInViewController : UIViewController
-
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passTextField;
+- (IBAction)signInBtnClick:(id)sender;
 @end

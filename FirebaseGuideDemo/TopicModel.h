@@ -10,12 +10,10 @@
 
 @interface TopicModel : NSObject
 @property (nonatomic,strong)NSString * topicId;
+@property (nonatomic,strong)NSString * topicTitle;
 @property (nonatomic,strong)NSString * topicDesc;
 @property (nonatomic,strong)NSString * topicImageURL;
 @property (nonatomic,strong)NSString * authName;
 @property (nonatomic,strong)NSDate   * postDate;
-
-
--(instancetype)initWithDict:(NSDictionary *)dict;
-
+@property (nonatomic,strong)NSString * topicHTMLString;
 @end
