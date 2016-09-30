@@ -12,6 +12,7 @@
 #import <FirebaseAuth/FirebaseAuth.h>
 #import "TopicDetailViewController.h"
 @interface TopicListViewController ()
+- (IBAction)logoutDidClick:(id)sender;
 @property (nonatomic,strong)NSMutableArray * datasource;
 @property (nonatomic,strong)FIRDatabaseReference * topicRef;
 @end
@@ -94,4 +95,14 @@
 }
 
 
+- (IBAction)logoutDidClick:(id)sender {
+    NSError * error = nil;
+    if (![[FIRAuth auth]signOut:&error]) {
+        NSLog(@"error : %@",error);
+        
+    }
+    else{
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"logoutnoti" object:nil];
+    }
+}
 @end

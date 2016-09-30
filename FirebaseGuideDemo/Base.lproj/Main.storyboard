@@ -70,18 +70,18 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N96-Y8-ktp" id="QSX-We-o23">
-                                    <frame key="frameInset" width="342" height="43.5"/>
+                                    <frame key="frameInset" width="342" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Opj-yr-qxX">
-                                            <frame key="frameInset" minX="15" minY="5" width="33.5" height="20.5"/>
+                                            <frame key="frameInset" minX="15" minY="4" width="34" height="21"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mOU-Cv-L8h">
-                                            <frame key="frameInset" minX="15" minY="25.5" width="44" height="14.5"/>
+                                            <frame key="frameInset" minX="15" minY="25" width="44" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -100,6 +100,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Topic" id="SA2-sG-M6I">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="afl-1m-yxg">
+                            <connections>
+                                <action selector="logoutDidClick:" destination="zms-dm-Es6" id="azq-80-w7D"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="compose" id="nUr-Uz-ZSN">
                             <connections>
                                 <segue destination="767-NE-wgV" kind="show" id="F9B-hv-B1z"/>
